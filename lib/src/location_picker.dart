@@ -15,6 +15,7 @@ import 'package:location/location.dart';
 import 'classes.dart';
 import 'widgets/copyright_osm_widget.dart';
 import 'widgets/wide_button.dart';
+import 'package:flutter/foundation.dart';
 
 /// Principal widget to show Flutter map using osm api with pick up location marker and search bar.
 /// you can track you current location, search for a location and select it.
@@ -371,6 +372,9 @@ class _FlutterLocationPickerState extends State<FlutterLocationPicker>
   ///   A Future<Position> object.
   Future<LocationData> _determinePosition() async {
     try {
+      if(kIsWeb) {
+          return await location.getLocation();
+      }
       // Test if location services are enabled.
       await checkLocationPermission();
       return await location.getLocation();
